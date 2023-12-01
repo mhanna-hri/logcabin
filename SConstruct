@@ -92,10 +92,9 @@ def detect_compiler():
 if env['CXX_FAMILY'].lower() == 'auto':
     try:
         detect_compiler()
-        print 'Detected compiler %s %s' % (env['CXX_FAMILY'],
-                                           env['CXX_VERSION'])
+        print(f"Detected compiler {env['CXX_FAMILY']}, {env['CXX_VERSION']}")
     except BaseException as e:
-        print 'Could not detect compiler: %s' % e
+        print(f"Could not detect compiler: {e}")
         pass
 
 CXX_STANDARD = 'c++11'
@@ -183,7 +182,7 @@ if env["BUILDTYPE"] == "DEBUG":
 elif env["BUILDTYPE"] == "RELEASE":
     env.Append(CPPFLAGS = [ "-DNDEBUG", "-O2" ])
 else:
-    print "Error BUILDTYPE must be RELEASE or DEBUG"
+    print ("Error BUILDTYPE must be RELEASE or DEBUG")
     sys.exit(-1)
 
 if env["VERBOSE"] == "0":
@@ -213,7 +212,7 @@ env.AddMethod(Protobuf)
 def GetNumCPUs():
     if env["NUMCPUS"] != "0":
         return int(env["NUMCPUS"])
-    if os.sysconf_names.has_key("SC_NPROCESSORS_ONLN"):
+    if "SC_NPROCESSORS_ONLN" in os.sysconf_names:
         cpus = os.sysconf("SC_NPROCESSORS_ONLN")
         if isinstance(cpus, int) and cpus > 0:
             return 2*cpus
@@ -414,7 +413,7 @@ def remove_sources(env, target, source):
             garbage.update(g.sources)
     for g in garbage:
         if env['VERBOSE'] == '1':
-            print 'rm %s' % g
+            print (f'rm {g}')
         try:
             os.remove(str(g))
         except OSError:
@@ -423,7 +422,7 @@ def remove_sources(env, target, source):
 # Rename PACKAGEROOT directory and subdirectories (should be empty)
 def remove_packageroot(env, target, source):
     if env['VERBOSE'] == '1':
-        print 'rm -r %s' % PACKAGEROOT
+        print (f'rm -r {PACKAGEROOT}')
     import shutil
     shutil.rmtree(str(PACKAGEROOT))
 

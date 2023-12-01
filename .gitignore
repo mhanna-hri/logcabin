@@ -1,5 +1,6 @@
 *.pyc
 /.sconsign.dblite
+.SConstruct.swp
 /Local.sc
 /Local.sc.bck
 /build
